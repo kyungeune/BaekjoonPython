@@ -20,11 +20,11 @@ for i in plus:
     q.append(i)
     print(q.popleft(), end=' ')
 
-# for j in plus:
-#     q.append(j)
-#     for i in range(n):
-#         if which[i] == 0:
-#             q.append(q[i])
-#     ans.append(q.pop())
 
-# print(*ans)
+
+# 풀이
+# 스택은 무시하고 큐만 취급함
+# ex) 기본 큐가 1 2 3 4 존재하고, 0을 넣어야 한다면 정답 방식으로는 list가
+# 0 1 2 3이 되고, 4가 pop된다.
+# 0을 왼쪽에 넣는 대신 입력을 거꾸로 받아서
+# 4 3 2 1 0 으로 만든 후, popleft를 활용해 pop한다.
