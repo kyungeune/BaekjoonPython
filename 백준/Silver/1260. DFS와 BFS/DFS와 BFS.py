@@ -1,68 +1,45 @@
+import sys
+def dfs(idx) : 
+    global visited
+    visited[idx] = True  # 다시는 들어오지 마라
+    print(idx, end = ' ')
+    for next in range(1, N+1):
+        if not visited[next] and graph[idx][next]:  # next가 방문되지 않았다 and 갈 수 있는 곳이라면
+            dfs(next)
 
-
-# DFS (Depth First Search)
-# → 최대한 깊숙이 들어갔다가, 막히면 되돌아오는 방식
-# → 스택(Stack) 구조처럼 작동하거나 재귀함수로 구현함
-
-# BFS (Breadth First Search)
-# → 가까운 곳부터 넓게 넓게 퍼져 나가는 방식
-# → 큐(Queue)를 써서 구현함
-
-
-
-# DFS
-def dfs(graph, v, vDFS):
-    vDFS[v] = True  # 방문 했다고 표시
-
-    print(v, end=' ')
-
-    for v in graph[v]:
-        if not vDFS[v]:  # 방문 안 했으면
-            dfs(graph, v, vDFS)
-
-
-# BFS 함수
-from collections import deque
-
-def bfs(graph, v):
-    vBFS = [False] * (len(graph))
-
-    q = deque([v])
-
-    vBFS[v] = True
-
+def bfs():
+    global q, visited
     while q:
-        v = q.popleft()
-        print(v, end=' ')
-        
-        for v in graph[v]:
-            if not vBFS[v]:
-                vBFS[v] = True
-                q.append(v)
+        cur = q.pop(0)
+        print(cur, end=' ')
+        for next in range(1, N+1):
+            if not visited[next] and graph[cur][next]:
+                visited[next] = True
+                q.append(next)
 
+# 0. 입력 및 초기화
+# 변수 설명
+# N: 정점의 개수
+# M: 간선의 개수
+# V: 탐색을 시작할 정점의 번호
+input = sys.stdin.readline
+N, M, V = map(int, input().split())
 
+graph = [[False]*(N+1) for _ in range(N+1)]  # 정점의 개수로(0~N) 구성된 2차원 배열
+visited = [False] * (N+1)
 
-
-n, m, v = map(int, input().split())
-
-graph = [[] for _ in range(n + 1)]
-
-for _ in range(m):
+# 1. graph 정보 입력
+for _ in range(M):
     a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
+    graph[a][b] = True
+    graph[b][a] = True
 
-
-# 항상 작은 번호부터 방문할 수 있도록 보장
-for i in graph:
-    i.sort()
-
-
-
-# DFS
-vDFS = [False] * (n + 1)  # 방문여부
-dfs(graph, v, vDFS)
+# 2. DFS(깊이 우선 탐색)
+dfs(V)
 print()
 
-# BFS
-bfs(graph, v)
+# 3. BFS(너비 우선 탐색)
+visited = [False]*(N+1)
+q=[V]  # 
+visited[V]=True
+bfs()
