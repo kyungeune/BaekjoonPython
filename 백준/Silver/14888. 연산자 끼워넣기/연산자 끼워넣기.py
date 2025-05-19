@@ -1,7 +1,7 @@
 import sys
 input = sys.stdin.readline
 
-def DFS(idx, total):  # idx : 몇번째, bIdx : 부호인덱스(전부 다 돌아야 함)
+def DFS(idx, total):  # idx : 몇번째
     global max, min, buho
     if idx == n:
         if total > max:
@@ -10,7 +10,7 @@ def DFS(idx, total):  # idx : 몇번째, bIdx : 부호인덱스(전부 다 돌�
             min = total
         return
     
-    for i in range(4):
+    for i in range(4):  # 부호 회전
         if buho[i]>=1:
             buho[i]-=1
 
@@ -21,14 +21,14 @@ def DFS(idx, total):  # idx : 몇번째, bIdx : 부호인덱스(전부 다 돌�
                 rslt = total - nums[idx]
             elif i==2:
                 rslt = total * nums[idx]
-            else:
+            else:  # 나누기
                 if total < 0:
                     rslt = -(-total // nums[idx])
                 else:
                     rslt = total // nums[idx]
 
             DFS(idx+1, rslt)
-            buho[i]+=1
+            buho[i]+=1  # 되돌리기
 
 
 n = int(input())
@@ -37,7 +37,7 @@ buho = list(map(int, input().split()))
 max=-1000000001
 min = 1000000001
 
-DFS(1, nums[0])
+DFS(1, nums[0])  # 첫번째 값을 넣은 채로 진행
 
 print(max)
 print(min)
